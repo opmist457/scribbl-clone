@@ -172,3 +172,30 @@
   color: rgba(250, 245, 239, 0.4);
   font-style: italic;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .chat-msg {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .chat-input-area {
+    padding: 6px;
+    gap: 4px;
+  }
+  
+  .chat-input {
+    padding: 6px 10px;
+    font-size: 0.95rem; /* Prevent iOS zoom on focus */
+  }
+  
+  .chat-send-btn {
+    padding: 6px 12px;
+  }
+}

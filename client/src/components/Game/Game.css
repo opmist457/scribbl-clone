@@ -92,17 +92,36 @@
 
 @media (max-width: 768px) {
   .game-board {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto;
-    height: auto;
-    min-height: 100vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh; /* Dynamic viewport height to account for mobile URL bars */
+    min-height: 100dvh;
+    padding: 6px;
+    gap: 6px;
+    overflow: hidden; /* Prevent page scrolling, components scroll internally */
   }
 
   .game-top-bar {
-    grid-column: 1;
-    flex-wrap: wrap;
-    gap: 8px;
+    order: 1;
+    flex-wrap: nowrap;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+
+  .game-center {
+    order: 2;
+    flex: 0 0 auto; /* Do not grow, do not shrink */
+  }
+
+  .chat-box {
+    order: 3;
+    flex: 1; /* Take all remaining space */
+    min-height: 0; /* Important for flex-shrink */
+  }
+
+  /* Hide scoreboard on small screens to save space */
+  .scoreboard {
+    display: none;
   }
 }
 

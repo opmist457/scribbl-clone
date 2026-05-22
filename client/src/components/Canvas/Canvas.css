@@ -242,3 +242,32 @@
 .tool-btn.danger:hover {
   background: rgba(139, 34, 82, 0.1);
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .canvas-container {
+    max-height: 38vh; /* Ensure canvas doesn't take up too much vertical space on mobile */
+  }
+
+  .drawing-tools {
+    padding: 6px 8px;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .tool-btn, .brush-size-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .color-swatch {
+    width: 18px;
+    height: 18px;
+  }
+
+  .tools-divider {
+    height: 24px;
+    margin: 0 2px;
+  }
+}
