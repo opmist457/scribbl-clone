@@ -344,7 +344,6 @@ interface GameContextValue extends GameContextState {
   playAgain: () => void;
   sendDrawData: (data: DrawEventData) => void;
   clearCanvas: () => void;
-  undoStroke: () => void;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
@@ -643,12 +642,6 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     }
   }, [socket]);
 
-  const undoStroke = useCallback(() => {
-    if (socket && stateRef.current.roomId) {
-      socket.emit('undo_stroke', { roomId: stateRef.current.roomId });
-    }
-  }, [socket]);
-
   const value: GameContextValue = {
     ...state,
     dispatch,
@@ -663,7 +656,6 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     playAgain,
     sendDrawData,
     clearCanvas: clearCanvasFn,
-    undoStroke,
   };
 
   return (
