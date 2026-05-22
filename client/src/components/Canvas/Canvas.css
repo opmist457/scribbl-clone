@@ -1,0 +1,244 @@
+/* ==============================
+ * DRAWING CANVAS - Japanese Ink Style
+ * ============================== */
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 300px;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 520px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 2px var(--color-gold, #c9a84c),
+    0 0 0 4px rgba(26, 17, 71, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 0 60px rgba(0, 0, 0, 0.03);
+}
+
+.canvas-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 3px solid transparent;
+  border-image: linear-gradient(
+    135deg,
+    var(--color-gold, #c9a84c),
+    var(--color-sakura, #ffb7c5),
+    var(--color-gold, #c9a84c)
+  ) 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.drawing-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: default;
+}
+
+.drawing-canvas.is-drawer {
+  cursor: none;
+}
+
+/* Custom brush cursor */
+.brush-cursor {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  transition: width 0.1s, height 0.1s;
+}
+
+.brush-cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Canvas status overlay */
+.canvas-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.canvas-status p {
+  font-family: var(--font-heading, 'Noto Sans JP', sans-serif);
+  font-size: 1.3rem;
+  color: var(--color-indigo, #1a1147);
+  opacity: 0.5;
+  margin: 0;
+}
+
+.canvas-status .status-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Drawing tools bar */
+.drawing-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  margin-top: 10px;
+  background: var(--color-cream, #faf5ef);
+  border-radius: 12px;
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(201, 168, 76, 0.2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tools-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tools-divider {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-gold, #c9a84c),
+    transparent
+  );
+  margin: 0 4px;
+}
+
+/* Color palette */
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 200px;
+}
+
+.color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  outline: none;
+}
+
+.color-swatch:hover {
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.color-swatch.active {
+  border-color: var(--color-gold, #c9a84c);
+  box-shadow: 0 0 0 2px var(--color-gold, #c9a84c),
+              0 0 8px rgba(201, 168, 76, 0.4);
+  transform: scale(1.15);
+}
+
+/* Brush sizes */
+.brush-sizes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brush-size-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(26, 17, 71, 0.05);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.brush-size-btn:hover {
+  background: rgba(26, 17, 71, 0.1);
+}
+
+.brush-size-btn.active {
+  border-color: var(--color-sakura, #ffb7c5);
+  background: rgba(255, 183, 197, 0.15);
+}
+
+.brush-size-dot {
+  border-radius: 50%;
+  background: var(--color-indigo, #1a1147);
+}
+
+/* Tool buttons */
+.tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(26, 17, 71, 0.05);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.tool-btn:hover {
+  background: rgba(26, 17, 71, 0.1);
+  transform: translateY(-1px);
+}
+
+.tool-btn.active {
+  border-color: var(--color-indigo, #1a1147);
+  background: rgba(26, 17, 71, 0.1);
+  box-shadow: 0 0 8px rgba(26, 17, 71, 0.2);
+}
+
+.tool-btn.danger {
+  color: var(--color-deep-red, #8b2252);
+}
+
+.tool-btn.danger:hover {
+  background: rgba(139, 34, 82, 0.1);
+}

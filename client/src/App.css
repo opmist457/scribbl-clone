@@ -1,0 +1,83 @@
+/* ==============================
+ * APP - Global App Styles
+ * ============================== */
+
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Cherry blossom petals layer */
+.sakura-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sakura-petal {
+  position: absolute;
+  top: -30px;
+  font-size: 1rem;
+  opacity: 0.6;
+  animation: sakura-fall linear infinite;
+  pointer-events: none;
+}
+
+.sakura-petal:nth-child(1) { left: 5%; animation-duration: 14s; animation-delay: 0s; font-size: 1.2rem; }
+.sakura-petal:nth-child(2) { left: 15%; animation-duration: 18s; animation-delay: 2s; font-size: 0.9rem; opacity: 0.4; }
+.sakura-petal:nth-child(3) { left: 28%; animation-duration: 12s; animation-delay: 4s; font-size: 1.1rem; }
+.sakura-petal:nth-child(4) { left: 40%; animation-duration: 20s; animation-delay: 1s; font-size: 0.8rem; opacity: 0.3; }
+.sakura-petal:nth-child(5) { left: 55%; animation-duration: 16s; animation-delay: 5s; font-size: 1rem; }
+.sakura-petal:nth-child(6) { left: 65%; animation-duration: 13s; animation-delay: 3s; font-size: 1.3rem; opacity: 0.5; }
+.sakura-petal:nth-child(7) { left: 75%; animation-duration: 19s; animation-delay: 0.5s; font-size: 0.7rem; }
+.sakura-petal:nth-child(8) { left: 85%; animation-duration: 15s; animation-delay: 6s; font-size: 1rem; opacity: 0.4; }
+.sakura-petal:nth-child(9) { left: 92%; animation-duration: 17s; animation-delay: 2.5s; font-size: 0.9rem; }
+.sakura-petal:nth-child(10) { left: 48%; animation-duration: 21s; animation-delay: 7s; font-size: 1.1rem; opacity: 0.35; }
+
+@keyframes sakura-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg) translateX(80px);
+    opacity: 0;
+  }
+}
+
+/* Page content - sits above petals */
+.app-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Connection status */
+.connection-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 6px 16px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(139, 34, 82, 0.9);
+  color: #faf5ef;
+  backdrop-filter: blur(8px);
+  animation: slide-down 0.3s ease;
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}

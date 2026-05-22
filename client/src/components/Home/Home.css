@@ -1,0 +1,425 @@
+/* ============================================================
+ * Home Page - Landing Screen
+ * Japanese Aesthetic Landing
+ * ============================================================ */
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(150deg, #0f0a2e 0%, var(--indigo-deep) 30%, var(--indigo-dark) 60%, #1e0f45 100%);
+}
+
+/* Seigaiha wave overlay at bottom */
+.home-wave-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  opacity: 0.08;
+  background:
+    radial-gradient(circle at 100% 150%, var(--sakura) 24%, transparent 24.5%),
+    radial-gradient(circle at 0% 150%, var(--sakura) 24%, transparent 24.5%),
+    radial-gradient(circle at 100% 150%, var(--sakura) 20%, transparent 20.5%),
+    radial-gradient(circle at 0% 150%, var(--sakura) 20%, transparent 20.5%);
+  background-size: 56px 28px;
+  pointer-events: none;
+}
+
+/* ---- Hero Section ---- */
+.home-hero {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  animation: fadeInDown 0.8s var(--ease-smooth) forwards;
+  position: relative;
+  z-index: 1;
+}
+
+.home-title {
+  font-family: var(--font-jp);
+  font-weight: 900;
+  font-size: 3.5rem;
+  color: var(--washi);
+  margin-bottom: var(--space-sm);
+  letter-spacing: -1px;
+  position: relative;
+  display: inline-block;
+}
+
+.home-title .jp-text {
+  color: var(--sakura);
+  font-size: 2.8rem;
+  margin-left: var(--space-sm);
+}
+
+/* Brush stroke decoration under title */
+.home-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 10%;
+  width: 80%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--sakura), var(--cherry-blossom), transparent);
+  border-radius: 2px;
+  animation: brushStroke 1s ease 0.5s forwards;
+}
+
+.home-subtitle {
+  font-family: var(--font-jp);
+  font-size: 1.1rem;
+  color: var(--ink-faint);
+  margin-top: var(--space-md);
+  font-weight: 300;
+}
+
+.home-subtitle .jp-sub {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--sakura-dark);
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* ---- Main Content Card ---- */
+.home-content {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s var(--ease-smooth) 0.2s forwards;
+  opacity: 0;
+}
+
+.home-card {
+  background: var(--washi);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-xl) var(--space-lg);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(139, 120, 80, 0.012) 3px,
+      rgba(139, 120, 80, 0.012) 6px
+    );
+  pointer-events: none;
+  border-radius: var(--radius-xl);
+}
+
+/* ---- Name Input Section ---- */
+.home-input-group {
+  margin-bottom: var(--space-lg);
+}
+
+.home-input-label {
+  display: block;
+  font-family: var(--font-jp);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-medium);
+  margin-bottom: var(--space-sm);
+}
+
+.home-name-input {
+  width: 100%;
+  padding: 14px var(--space-md);
+  font-size: 1.05rem;
+  background: var(--washi-dark);
+  border: 2px solid var(--washi-deep);
+  border-radius: var(--radius-md);
+  color: var(--ink-black);
+  transition: all var(--transition-normal);
+  font-family: var(--font-jp);
+}
+
+.home-name-input::placeholder {
+  color: var(--ink-light);
+}
+
+.home-name-input:focus {
+  border-color: var(--sakura);
+  box-shadow: 0 0 0 3px var(--sakura-glow);
+  background: white;
+}
+
+/* ---- Avatar Section ---- */
+.home-avatar-section {
+  margin-bottom: var(--space-lg);
+}
+
+.home-avatar-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.home-avatar-preview-text {
+  font-family: var(--font-jp);
+  font-size: 0.9rem;
+  color: var(--ink-medium);
+}
+
+.home-avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.avatar-color-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.avatar-color-btn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-color-btn.selected {
+  border-color: var(--ink-black);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px white, 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-color-btn.selected::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Divider ---- */
+.home-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.home-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--washi-deep), transparent);
+}
+
+.home-divider-text {
+  font-family: var(--font-jp);
+  font-size: 0.8rem;
+  color: var(--ink-light);
+  white-space: nowrap;
+}
+
+/* ---- Action Buttons ---- */
+.home-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.home-action-btn {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--font-jp);
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-action-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.home-create-btn {
+  background: linear-gradient(135deg, var(--sakura), var(--cherry-blossom));
+  color: var(--indigo-deep);
+  box-shadow: 0 4px 15px rgba(255, 183, 197, 0.3);
+}
+
+.home-create-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 183, 197, 0.45);
+}
+
+.home-join-btn {
+  background: linear-gradient(135deg, var(--indigo-dark), var(--indigo-medium));
+  color: var(--washi);
+  box-shadow: 0 4px 15px rgba(45, 27, 105, 0.3);
+}
+
+.home-join-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(45, 27, 105, 0.45);
+}
+
+.home-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.home-action-btn .btn-jp {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+/* ---- Join Room Section ---- */
+.home-join-section {
+  margin-top: var(--space-md);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.home-join-input-row {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.home-room-code-input {
+  flex: 1;
+  padding: 14px var(--space-md);
+  font-size: 1.1rem;
+  font-family: 'Inter', monospace;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--washi-dark);
+  border: 2px solid var(--washi-deep);
+  border-radius: var(--radius-md);
+  color: var(--ink-black);
+  transition: all var(--transition-normal);
+}
+
+.home-room-code-input::placeholder {
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.home-room-code-input:focus {
+  border-color: var(--indigo-light);
+  box-shadow: 0 0 0 3px rgba(93, 68, 153, 0.15);
+  background: white;
+}
+
+.home-join-go-btn {
+  padding: 14px 24px;
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: 1rem;
+  background: linear-gradient(135deg, var(--indigo-dark), var(--indigo-medium));
+  color: var(--washi);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+}
+
+.home-join-go-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 27, 105, 0.3);
+}
+
+.home-join-go-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---- Error Message ---- */
+.home-error {
+  background: rgba(192, 57, 43, 0.08);
+  border: 1px solid rgba(192, 57, 43, 0.2);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--red-accent);
+  font-size: 0.9rem;
+  margin-top: var(--space-md);
+  animation: fadeIn 0.3s ease;
+  text-align: center;
+}
+
+/* ---- Connection Status ---- */
+.home-connection {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--washi);
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.connection-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bamboo-light);
+}
+
+.connection-dot.disconnected {
+  background: var(--red-accent);
+  animation: pulse 1.5s infinite;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 540px) {
+  .home-page {
+    padding: var(--space-md);
+  }
+
+  .home-title {
+    font-size: 2.4rem;
+  }
+
+  .home-title .jp-text {
+    font-size: 2rem;
+    display: block;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .home-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+}

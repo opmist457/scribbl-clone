@@ -1,0 +1,1061 @@
+/* ============================================================
+ * 和風デザインシステム - Japanese Design System
+ * Skribbl.io Clone - 描く & 当てる
+ * ============================================================ */
+
+/* ---- CSS Custom Properties ---- */
+:root {
+  /* Primary Colors */
+  --indigo-deep: #1a1147;
+  --indigo-dark: #2d1b69;
+  --indigo-medium: #3d2b7a;
+  --indigo-light: #5a4499;
+  --indigo-glow: #7c6bc4;
+
+  /* Washi / Cream */
+  --washi: #faf5ef;
+  --washi-dark: #f5efe0;
+  --washi-warm: #f0e8d8;
+  --washi-deep: #e8dcc8;
+
+  /* Sakura / Pink */
+  --sakura: #ffb7c5;
+  --sakura-light: #ffd1dc;
+  --sakura-dark: #f7a8b8;
+  --cherry-blossom: #e8a0bf;
+  --sakura-glow: rgba(255, 183, 197, 0.3);
+
+  /* Bamboo / Green */
+  --bamboo: #5a7247;
+  --bamboo-light: #7a9e5a;
+  --bamboo-dark: #3d5230;
+  --bamboo-glow: rgba(90, 114, 71, 0.3);
+
+  /* Gold / Amber */
+  --gold: #c9a84c;
+  --gold-light: #d4b86a;
+  --gold-dark: #a88a3a;
+  --gold-glow: rgba(201, 168, 76, 0.3);
+
+  /* Deep Red */
+  --red-deep: #8b2252;
+  --red-accent: #c0392b;
+  --red-light: #e74c3c;
+  --red-glow: rgba(139, 34, 82, 0.3);
+
+  /* Neutrals */
+  --ink-black: #1a1a2e;
+  --ink-dark: #2d2d44;
+  --ink-medium: #4a4a6a;
+  --ink-light: #8888aa;
+  --ink-faint: #b8b8d0;
+
+  /* Functional */
+  --success: #5a7247;
+  --warning: #c9a84c;
+  --danger: #c0392b;
+  --info: #3498db;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(26, 17, 71, 0.08);
+  --shadow-md: 0 4px 16px rgba(26, 17, 71, 0.12);
+  --shadow-lg: 0 8px 32px rgba(26, 17, 71, 0.18);
+  --shadow-xl: 0 12px 48px rgba(26, 17, 71, 0.25);
+  --shadow-glow-sakura: 0 0 20px rgba(255, 183, 197, 0.4);
+  --shadow-glow-gold: 0 0 20px rgba(201, 168, 76, 0.4);
+  --shadow-glow-indigo: 0 0 20px rgba(93, 68, 153, 0.5);
+
+  /* Typography */
+  --font-jp: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+  --font-body: 'Inter', 'Noto Sans JP', sans-serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-fast: 150ms var(--ease-smooth);
+  --transition-normal: 250ms var(--ease-smooth);
+  --transition-slow: 400ms var(--ease-smooth);
+
+  /* Z-index layers */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-petals: 0;
+}
+
+/* ---- Global Reset ---- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--indigo-deep);
+  color: var(--ink-black);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  outline: none;
+  border: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---- Typography ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-jp);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text-jp {
+  font-family: var(--font-jp);
+}
+
+/* ---- Scrollbar Styling ---- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--washi-dark);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--sakura-dark), var(--cherry-blossom));
+  border-radius: var(--radius-full);
+  border: 2px solid var(--washi-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--sakura), var(--sakura-dark));
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sakura-dark) var(--washi-dark);
+}
+
+/* ============================================================
+ * SEIGAIHA WAVE PATTERN (青海波)
+ * Traditional Japanese wave pattern using radial gradients
+ * ============================================================ */
+.seigaiha-bg {
+  position: relative;
+}
+
+.seigaiha-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 100% 150%, var(--indigo-light) 24%, transparent 24.5%),
+    radial-gradient(circle at 0% 150%, var(--indigo-light) 24%, transparent 24.5%),
+    radial-gradient(circle at 100% 150%, var(--indigo-light) 20%, transparent 20.5%),
+    radial-gradient(circle at 0% 150%, var(--indigo-light) 20%, transparent 20.5%),
+    radial-gradient(circle at 100% 150%, var(--indigo-light) 16%, transparent 16.5%),
+    radial-gradient(circle at 0% 150%, var(--indigo-light) 16%, transparent 16.5%);
+  background-size: 48px 24px;
+  z-index: 0;
+}
+
+/* Standalone seigaiha overlay */
+.seigaiha-pattern {
+  background:
+    radial-gradient(circle at 100% 150%, rgba(93, 68, 153, 0.08) 24%, transparent 24.5%),
+    radial-gradient(circle at 0% 150%, rgba(93, 68, 153, 0.08) 24%, transparent 24.5%),
+    radial-gradient(circle at 100% 150%, rgba(93, 68, 153, 0.06) 20%, transparent 20.5%),
+    radial-gradient(circle at 0% 150%, rgba(93, 68, 153, 0.06) 20%, transparent 20.5%);
+  background-size: 48px 24px;
+}
+
+/* ============================================================
+ * ASANOHA PATTERN (麻の葉)
+ * Geometric hemp leaf pattern
+ * ============================================================ */
+.asanoha-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image:
+    linear-gradient(30deg, var(--indigo-light) 12%, transparent 12.5%, transparent 87%, var(--indigo-light) 87.5%, var(--indigo-light)),
+    linear-gradient(150deg, var(--indigo-light) 12%, transparent 12.5%, transparent 87%, var(--indigo-light) 87.5%, var(--indigo-light)),
+    linear-gradient(30deg, var(--indigo-light) 12%, transparent 12.5%, transparent 87%, var(--indigo-light) 87.5%, var(--indigo-light)),
+    linear-gradient(150deg, var(--indigo-light) 12%, transparent 12.5%, transparent 87%, var(--indigo-light) 87.5%, var(--indigo-light)),
+    linear-gradient(60deg, rgba(93, 68, 153, 0.5) 25%, transparent 25.5%, transparent 75%, rgba(93, 68, 153, 0.5) 75%),
+    linear-gradient(60deg, rgba(93, 68, 153, 0.5) 25%, transparent 25.5%, transparent 75%, rgba(93, 68, 153, 0.5) 75%);
+  background-size: 40px 70px;
+  background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+  z-index: 0;
+}
+
+/* ============================================================
+ * CHERRY BLOSSOM PETAL ANIMATION (桜の花びら)
+ * CSS-only falling petals
+ * ============================================================ */
+.sakura-petals {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--z-petals);
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -20px;
+  border-radius: 150% 0 150% 0;
+  animation: petalFall linear infinite, petalSway ease-in-out infinite;
+  opacity: 0;
+}
+
+.petal:nth-child(1) {
+  left: 5%;
+  width: 12px;
+  height: 10px;
+  background: linear-gradient(135deg, #ffcdd6, #ffb7c5);
+  animation-duration: 14s, 4s;
+  animation-delay: 0s, 0s;
+}
+
+.petal:nth-child(2) {
+  left: 15%;
+  width: 10px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffd1dc, #f7a8b8);
+  animation-duration: 18s, 5s;
+  animation-delay: 2s, 1s;
+}
+
+.petal:nth-child(3) {
+  left: 28%;
+  width: 14px;
+  height: 12px;
+  background: linear-gradient(135deg, #ffb7c5, #e8a0bf);
+  animation-duration: 16s, 3.5s;
+  animation-delay: 4s, 0.5s;
+}
+
+.petal:nth-child(4) {
+  left: 40%;
+  width: 8px;
+  height: 7px;
+  background: linear-gradient(135deg, #ffd1dc, #ffb7c5);
+  animation-duration: 20s, 4.5s;
+  animation-delay: 1s, 2s;
+}
+
+.petal:nth-child(5) {
+  left: 55%;
+  width: 11px;
+  height: 9px;
+  background: linear-gradient(135deg, #f7a8b8, #ffcdd6);
+  animation-duration: 15s, 3s;
+  animation-delay: 3s, 1.5s;
+}
+
+.petal:nth-child(6) {
+  left: 65%;
+  width: 13px;
+  height: 11px;
+  background: linear-gradient(135deg, #ffb7c5, #ffd1dc);
+  animation-duration: 17s, 5.5s;
+  animation-delay: 5s, 0s;
+}
+
+.petal:nth-child(7) {
+  left: 75%;
+  width: 9px;
+  height: 7px;
+  background: linear-gradient(135deg, #e8a0bf, #f7a8b8);
+  animation-duration: 19s, 4s;
+  animation-delay: 0.5s, 3s;
+}
+
+.petal:nth-child(8) {
+  left: 85%;
+  width: 12px;
+  height: 10px;
+  background: linear-gradient(135deg, #ffd1dc, #ffb7c5);
+  animation-duration: 13s, 3.8s;
+  animation-delay: 6s, 2s;
+}
+
+.petal:nth-child(9) {
+  left: 92%;
+  width: 10px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffb7c5, #e8a0bf);
+  animation-duration: 21s, 4.2s;
+  animation-delay: 3.5s, 1s;
+}
+
+.petal:nth-child(10) {
+  left: 48%;
+  width: 14px;
+  height: 11px;
+  background: linear-gradient(135deg, #ffd1dc, #f7a8b8);
+  animation-duration: 16s, 5s;
+  animation-delay: 7s, 0.5s;
+}
+
+.petal:nth-child(11) {
+  left: 10%;
+  width: 9px;
+  height: 8px;
+  background: linear-gradient(135deg, #ffcdd6, #e8a0bf);
+  animation-duration: 22s, 3.2s;
+  animation-delay: 8s, 2.5s;
+}
+
+.petal:nth-child(12) {
+  left: 35%;
+  width: 11px;
+  height: 9px;
+  background: linear-gradient(135deg, #f7a8b8, #ffd1dc);
+  animation-duration: 15s, 4.8s;
+  animation-delay: 1.5s, 0s;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes petalSway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(30px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+  75% {
+    transform: translateX(25px);
+  }
+}
+
+/* ============================================================
+ * WASHI PAPER TEXTURE (和紙テクスチャ)
+ * Subtle noise + warm tint for paper-like cards
+ * ============================================================ */
+.washi-card {
+  background: var(--washi);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.washi-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 120, 80, 0.015) 2px,
+      rgba(139, 120, 80, 0.015) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(139, 120, 80, 0.01) 3px,
+      rgba(139, 120, 80, 0.01) 6px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.washi-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+ * GLASSMORPHISM (Japanese Colors)
+ * ============================================================ */
+.glass {
+  background: rgba(250, 245, 239, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(250, 245, 239, 0.15);
+  border-radius: var(--radius-md);
+}
+
+.glass-dark {
+  background: rgba(26, 17, 71, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 183, 197, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.glass-sakura {
+  background: rgba(255, 183, 197, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 183, 197, 0.2);
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+ * INK BRUSH STROKE BORDERS (墨筆)
+ * ============================================================ */
+.ink-border {
+  border: 2px solid var(--ink-dark);
+  border-radius: var(--radius-sm);
+  box-shadow:
+    inset 0 0 0 1px rgba(26, 26, 46, 0.05),
+    2px 2px 0 rgba(26, 26, 46, 0.08),
+    -1px -1px 0 rgba(26, 26, 46, 0.04);
+}
+
+.ink-border-light {
+  border: 1px solid rgba(26, 26, 46, 0.12);
+  border-radius: var(--radius-sm);
+  box-shadow:
+    1px 1px 0 rgba(26, 26, 46, 0.04),
+    -0.5px -0.5px 0 rgba(26, 26, 46, 0.02);
+}
+
+/* ============================================================
+ * TORII GATE HEADER (鳥居ヘッダー)
+ * CSS-only decorative header inspired by torii gates
+ * ============================================================ */
+.torii-header {
+  position: relative;
+  text-align: center;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.torii-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 400px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--red-deep), var(--red-deep), transparent);
+  border-radius: 2px;
+}
+
+.torii-header::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 440px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red-deep) 15%, var(--red-deep) 85%, transparent);
+  border-radius: 1.5px;
+}
+
+/* Torii pillars */
+.torii-pillars {
+  position: relative;
+  display: inline-block;
+}
+
+.torii-pillars::before,
+.torii-pillars::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 3px;
+  height: calc(100% + 16px);
+  background: var(--red-deep);
+  border-radius: 1.5px;
+}
+
+.torii-pillars::before {
+  left: -20px;
+}
+
+.torii-pillars::after {
+  right: -20px;
+}
+
+/* ============================================================
+ * BUTTONS (ボタン)
+ * ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-jp);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Primary - Sakura */
+.btn-primary {
+  background: linear-gradient(135deg, var(--sakura), var(--cherry-blossom));
+  color: var(--indigo-deep);
+  box-shadow: var(--shadow-md), 0 0 0 0 var(--sakura-glow);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-sakura);
+}
+
+/* Secondary - Indigo */
+.btn-secondary {
+  background: linear-gradient(135deg, var(--indigo-dark), var(--indigo-medium));
+  color: var(--washi);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-indigo);
+}
+
+/* Danger - Red */
+.btn-danger {
+  background: linear-gradient(135deg, var(--red-deep), var(--red-accent));
+  color: var(--washi);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-danger:hover:not(:disabled) {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-sakura);
+}
+
+/* Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--washi);
+  border: 1px solid rgba(250, 245, 239, 0.2);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(250, 245, 239, 0.08);
+  border-color: rgba(250, 245, 239, 0.3);
+}
+
+/* Sizes */
+.btn-sm {
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-lg {
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.1rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Loading spinner */
+.btn .btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+ * CARD STYLES
+ * ============================================================ */
+.card {
+  background: var(--washi);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-dark {
+  background: rgba(26, 17, 71, 0.6);
+  border: 1px solid rgba(255, 183, 197, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  color: var(--washi);
+}
+
+/* ============================================================
+ * FORM INPUTS (入力フィールド)
+ * ============================================================ */
+.input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  background: var(--washi);
+  border: 2px solid var(--washi-deep);
+  border-radius: var(--radius-md);
+  color: var(--ink-black);
+  transition: all var(--transition-normal);
+}
+
+.input::placeholder {
+  color: var(--ink-light);
+  font-family: var(--font-jp);
+}
+
+.input:focus {
+  border-color: var(--sakura);
+  box-shadow: 0 0 0 3px var(--sakura-glow);
+}
+
+.input-dark {
+  background: rgba(250, 245, 239, 0.08);
+  border: 2px solid rgba(250, 245, 239, 0.12);
+  color: var(--washi);
+}
+
+.input-dark::placeholder {
+  color: var(--ink-faint);
+}
+
+.input-dark:focus {
+  border-color: var(--sakura-dark);
+  box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.15);
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* Range slider */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--washi-deep);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sakura), var(--cherry-blossom));
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(255, 183, 197, 0.4);
+  transition: all var(--transition-fast);
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 2px 10px rgba(255, 183, 197, 0.6);
+}
+
+.range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sakura), var(--cherry-blossom));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(255, 183, 197, 0.4);
+}
+
+/* ============================================================
+ * ANIMATIONS & UTILITIES
+ * ============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes brushStroke {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Utility classes */
+.animate-fade-in { animation: fadeIn 0.4s var(--ease-smooth) forwards; }
+.animate-fade-in-up { animation: fadeInUp 0.5s var(--ease-smooth) forwards; }
+.animate-fade-in-down { animation: fadeInDown 0.5s var(--ease-smooth) forwards; }
+.animate-fade-in-scale { animation: fadeInScale 0.4s var(--ease-spring) forwards; }
+.animate-slide-in-left { animation: slideInLeft 0.5s var(--ease-smooth) forwards; }
+.animate-slide-in-right { animation: slideInRight 0.5s var(--ease-smooth) forwards; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+/* Stagger delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ============================================================
+ * RESPONSIVE BREAKPOINTS
+ * ============================================================ */
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --space-xl: 24px;
+    --space-2xl: 36px;
+    --space-3xl: 48px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 28px;
+  }
+
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+ * MODAL BACKDROP
+ * ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 17, 71, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.modal-content {
+  animation: fadeInScale 0.3s var(--ease-spring) forwards;
+}
+
+/* ============================================================
+ * GRADIENT BACKGROUNDS
+ * ============================================================ */
+.bg-gradient-main {
+  background: linear-gradient(135deg, var(--indigo-deep) 0%, #1e1454 30%, var(--indigo-dark) 60%, #221460 100%);
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, #1a1147 0%, #2d1b69 50%, #3a1d5c 100%);
+}
+
+/* ============================================================
+ * DIVIDERS (Japanese bamboo style)
+ * ============================================================ */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--washi-deep), transparent);
+  margin: var(--space-md) 0;
+}
+
+.divider-dark {
+  background: linear-gradient(90deg, transparent, rgba(250, 245, 239, 0.15), transparent);
+}
+
+.divider-gold {
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  height: 2px;
+}
+
+/* ============================================================
+ * BADGE / TAG
+ * ============================================================ */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  background: var(--washi-dark);
+  color: var(--ink-dark);
+}
+
+.tag-sakura {
+  background: rgba(255, 183, 197, 0.15);
+  color: var(--sakura);
+}
+
+.tag-gold {
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+}
+
+.tag-bamboo {
+  background: rgba(90, 114, 71, 0.15);
+  color: var(--bamboo-light);
+}
+
+/* ============================================================
+ * CONFETTI / CELEBRATION BURST
+ * ============================================================ */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes celebrationBurst {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+ * TOOLTIP
+ * ============================================================ */
+.tooltip-wrapper {
+  position: relative;
+}
+
+.tooltip-wrapper::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  padding: 4px 10px;
+  background: var(--ink-black);
+  color: var(--washi);
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-fast);
+  z-index: var(--z-tooltip);
+}
+
+.tooltip-wrapper:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
