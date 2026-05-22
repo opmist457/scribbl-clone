@@ -53,16 +53,11 @@ A real-time multiplayer drawing and guessing game (Pictionary) built with a beau
 # 1. Clone / navigate to the project
 cd skribbl-clone
 
-# 2. Install all dependencies (server + client + root)
+# 2. Install all dependencies (server + client)
 npm run setup
 
-# OR install manually:
-npm install
-cd server && npm install && cd ..
-cd client && npm install && cd ..
-
-# 3. Seed the database with 500+ words
-npm run seed
+# 3. Build the project and automatically seed the database
+npm run build
 ```
 
 ### Running the Application
