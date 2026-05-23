@@ -247,8 +247,12 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
     case 'ROUND_END': {
       const { word, scores } = action.payload;
       const scoreMap: Record<string, number> = {};
+      const roundScoreMap: Record<string, number> = {};
       if (Array.isArray(scores)) {
-        scores.forEach((s: any) => { scoreMap[s.playerId] = s.score; });
+        scores.forEach((s: any) => { 
+          scoreMap[s.playerId] = s.score;
+          roundScoreMap[s.playerId] = s.roundScore;
+        });
       } else {
         Object.assign(scoreMap, scores);
       }
@@ -263,6 +267,7 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
         players: state.players.map(p => ({
           ...p,
           score: scoreMap[p.id] ?? p.score,
+          roundScore: roundScoreMap[p.id] ?? p.roundScore ?? 0,
         })),
       };
     }
@@ -292,8 +297,12 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
     case 'SCOREBOARD_UPDATE': {
       const { scores } = action.payload;
       const scoreMap: Record<string, number> = {};
+      const roundScoreMap: Record<string, number> = {};
       if (Array.isArray(scores)) {
-        scores.forEach((s: any) => { scoreMap[s.playerId] = s.score; });
+        scores.forEach((s: any) => { 
+          scoreMap[s.playerId] = s.score;
+          roundScoreMap[s.playerId] = s.roundScore;
+        });
       } else {
         Object.assign(scoreMap, scores);
       }
@@ -306,6 +315,7 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
         players: state.players.map(p => ({
           ...p,
           score: scoreMap[p.id] ?? p.score,
+          roundScore: roundScoreMap[p.id] ?? p.roundScore ?? 0,
         })),
       };
     }

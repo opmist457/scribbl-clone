@@ -16,8 +16,8 @@ const RoundEnd: React.FC = () => {
 
   if (!visible || !gameState.correctWord) return null;
 
-  // Calculate round scores
-  const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
+  // Sort players by their round score instead of total score
+  const sortedPlayers = [...players].sort((a, b) => (b.roundScore || 0) - (a.roundScore || 0));
 
   return (
     <div className="round-end-overlay">
@@ -33,7 +33,7 @@ const RoundEnd: React.FC = () => {
                 {player.name}
               </span>
               <span className="round-score-pts">
-                {player.score} pts
+                +{(player.roundScore || 0)} pts
               </span>
             </li>
           ))}

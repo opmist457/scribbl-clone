@@ -8,6 +8,7 @@ export interface Player {
   name: string;
   avatarColor: string;
   score: number;
+  roundScore?: number;
   isHost: boolean;
   isDrawing: boolean;
   hasGuessedCorrectly: boolean;
