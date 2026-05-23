@@ -219,6 +219,11 @@ export function useCanvas({ isDrawer, socket, roomId }: UseCanvasOptions): UseCa
   useEffect(() => {
     if (!socket) return;
 
+    // Fetch initial state for late joiners
+    if (roomId) {
+      socket.emit('request_canvas_state', { roomId });
+    }
+
     const handleDrawData = (payload: any) => {
       const data = payload.stroke ? payload.stroke : payload;
       const canvas = canvasRef.current;

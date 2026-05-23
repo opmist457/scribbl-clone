@@ -86,12 +86,12 @@ export class Room {
       return { success: false, error: 'Room is full' };
     }
 
-    if (this.game && this.game.phase !== 'LOBBY' && this.game.phase !== 'GAME_OVER') {
-      return { success: false, error: 'Game is already in progress' };
-    }
-
     this.players.set(player.id, player);
     this.savePlayerToDb(player);
+
+    if (this.game && this.game.phase !== 'LOBBY' && this.game.phase !== 'GAME_OVER') {
+      this.game.players.push(player);
+    }
 
     return { success: true };
   }

@@ -18,6 +18,7 @@ const GameBoard: React.FC = () => {
     isDrawer,
     leaveRoom,
     myPlayerId,
+    roomId,
   } = useGame();
 
   const navigate = useNavigate();
@@ -38,6 +39,13 @@ const GameBoard: React.FC = () => {
         <div className="game-round-info">
           <span className="round-badge">
             Round {gameState.currentRound} / {gameState.totalRounds}
+          </span>
+          <span 
+            className="room-code-badge" 
+            onClick={() => navigator.clipboard.writeText(roomId || '')} 
+            title="Click to copy room code"
+          >
+            Code: <strong>{roomId}</strong>
           </span>
           {currentDrawerPlayer && (
             <span className="drawer-name">

@@ -93,6 +93,37 @@ function extractPlayers(room: RoomState): Player[] {
   return [];
 }
 
+function parseGameStateFromServer(serverGame: any, existingState: GameState): GameState {
+  if (!serverGame) return existingState;
+  
+  const scoreMap: Record<string, number> = {};
+  if (Array.isArray(serverGame.scoreboard)) {
+    serverGame.scoreboard.forEach((s: any) => { 
+      scoreMap[s.playerId] = s.score;
+    });
+  }
+  
+  let mappedPhase = 'waiting';
+  if (serverGame.phase === 'LOBBY') mappedPhase = 'waiting';
+  else if (serverGame.phase === 'CHOOSING_WORD') mappedPhase = 'choosing';
+  else if (serverGame.phase === 'DRAWING') mappedPhase = 'drawing';
+  else if (serverGame.phase === 'ROUND_END') mappedPhase = 'round_end';
+  else if (serverGame.phase === 'GAME_OVER') mappedPhase = 'game_over';
+
+  return {
+    ...existingState,
+    phase: mappedPhase as any,
+    currentRound: serverGame.currentRound,
+    totalRounds: serverGame.totalRounds,
+    currentDrawer: serverGame.currentDrawerId,
+    wordHint: serverGame.hint || '',
+    wordLength: serverGame.wordLength || 0,
+    timeRemaining: serverGame.timeRemaining || 0,
+    totalTime: serverGame.drawTime || 80,
+    scores: scoreMap,
+  };
+}
+
 /* ---- Reducer ---- */
 function gameReducer(state: GameContextState, action: GameAction): GameContextState {
   switch (action.type) {
@@ -106,11 +137,13 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
       const { roomId, room, myPlayerId } = action.payload;
       const players = extractPlayers(room);
       const me = players.find(p => p.id === myPlayerId) || players[0];
+      const newGameState = parseGameStateFromServer(room.game, state.gameState);
       return {
         ...state,
         roomId,
         players,
         settings: room.settings || { ...DEFAULT_SETTINGS },
+        gameState: newGameState,
         myPlayerId,
         myPlayer: me || null,
         isHost: true,
@@ -122,11 +155,13 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
       const { roomId, playerId, room } = action.payload;
       const players = extractPlayers(room);
       const me = players.find(p => p.id === playerId);
+      const newGameState = parseGameStateFromServer(room.game, state.gameState);
       return {
         ...state,
         roomId,
         players,
         settings: room.settings || { ...DEFAULT_SETTINGS },
+        gameState: newGameState,
         myPlayerId: playerId,
         myPlayer: me || null,
         isHost: me?.isHost || false,
@@ -423,12 +458,20 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     socket.on('room_created', (data: any) => {
       const myId = data.playerId || data.room?.players?.[0]?.id || socket.id || '';
       dispatch({ type: 'ROOM_CREATED', payload: { roomId: data.roomId, room: data.room, myPlayerId: myId } });
-      navigate(`/lobby/${data.roomId}`);
+      if (data.room.game && data.room.game.phase !== 'LOBBY' && data.room.game.phase !== 'GAME_OVER') {
+        navigate(`/game/${data.roomId}`);
+      } else {
+        navigate(`/lobby/${data.roomId}`);
+      }
     });
 
     socket.on('room_joined', (data: any) => {
       dispatch({ type: 'ROOM_JOINED', payload: { roomId: data.roomId, playerId: data.playerId, room: data.room } });
-      navigate(`/lobby/${data.roomId}`);
+      if (data.room.game && data.room.game.phase !== 'LOBBY' && data.room.game.phase !== 'GAME_OVER') {
+        navigate(`/game/${data.roomId}`);
+      } else {
+        navigate(`/lobby/${data.roomId}`);
+      }
     });
 
     socket.on('player_joined', (data: any) => {
