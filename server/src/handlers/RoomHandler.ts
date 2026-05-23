@@ -155,7 +155,7 @@ export function registerRoomHandlers(
 
       // If a game is in progress and in drawing phase, send canvas state
       if (room.game && room.game.phase === 'DRAWING') {
-        socket.emit('canvas_state', { strokes: room.game.strokes });
+        socket.emit('canvas_state', { strokes: (room.game as any).flatStrokes || [] });
         socket.emit('game_state', room.game.toJSON(player.id));
       }
     } catch (err) {

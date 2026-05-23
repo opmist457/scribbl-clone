@@ -39,7 +39,7 @@ export function registerDrawHandlers(
   });
 
   // ---- CANVAS CLEAR ----
-  socket.on('canvas_clear', (payload: CanvasClearPayload) => {
+  socket.on('clear_canvas', (payload: CanvasClearPayload) => {
     try {
       const { roomId } = payload;
       const room = rooms.get(roomId);
