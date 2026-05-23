@@ -125,9 +125,29 @@
 
   .game-top-bar {
     order: 1;
-    flex-wrap: nowrap;
-    padding: 6px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
     border-radius: 8px;
+    justify-content: space-between;
+  }
+
+  .game-round-info {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .hint-and-timer {
+    gap: 8px;
+  }
+
+  .room-code-badge, .round-badge {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+  }
+
+  .drawer-name {
+    display: none; /* Hide drawer name on mobile to save space, rely on chat/canvas hints */
   }
 
   .game-center {
