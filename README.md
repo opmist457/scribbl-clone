@@ -15,6 +15,7 @@ A real-time multiplayer drawing and guessing game (Pictionary) built with a beau
 - **Multiplayer rooms** — Create or join rooms; support for private rooms via room code
 - **Turn-based drawing** — One drawer per round; others guess
 - **Real-time drawing** — Canvas updates in real time via WebSocket
+- **Late joiner support** — Players can join active games mid-round and instantly sync the canvas history
 - **Word system** — Drawer picks a word from choices; others see hints/blanks
 - **Scoring** — Points for correct guesses; time bonus; leaderboard
 - **Chat & guessing** — Integrated chat with guess checking
@@ -38,10 +39,10 @@ A real-time multiplayer drawing and guessing game (Pictionary) built with a beau
 
 ### Design
 - 🌸 Japanese aesthetic (和風デザイン)
-- Cherry blossom animations
-- Washi paper textures
+- Cherry blossom animations & Washi paper textures
 - Deep indigo & sakura color palette
-- Responsive design
+- **Fully responsive mobile layout** — Play comfortably on phones with fluid wrapping UI
+- **Mid-game sharing** — One-click copyable room code always visible on the game board
 
 ## 🚀 Getting Started
 
