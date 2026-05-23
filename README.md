@@ -1,5 +1,7 @@
 # 🌸 Skribbl.io Clone — 描く & 当てる
 
+**Live Deployment URL:** [https://scribbl-clone-ijio.onrender.com/](https://scribbl-clone-ijio.onrender.com/)
+
 A real-time multiplayer drawing and guessing game (Pictionary) built with a beautiful Japanese-inspired aesthetic.
 
 ![Made with React](https://img.shields.io/badge/React-18-blue)
@@ -83,7 +85,7 @@ Open **http://localhost:5173** in your browser. Open multiple tabs to test multi
 
 ## 🏗️ Architecture
 
-```
+```text
 skribbl-clone/
 ├── client/                  # React + Vite + TypeScript frontend
 │   ├── src/
@@ -124,7 +126,7 @@ The backend uses an **OOP architecture** with the following classes:
 
 ### WebSocket Flow
 
-```
+```text
 Client                          Server
   │                               │
   ├── create_room ───────────────►│
@@ -190,26 +192,6 @@ CREATE TABLE custom_words (id, room_id, word)
 - Case-insensitive comparison with trimmed whitespace
 - "Close guess" detection via Levenshtein distance (≤ 2 edits)
 - Progressive hint reveals based on elapsed time
-
-## 🎯 Deployment to Render
-
-This project is fully configured for production deployment. The Node.js server automatically serves the built React frontend when running in production mode.
-
-### Step-by-Step Render Deployment:
-
-1. Push your code to a GitHub/GitLab repository.
-2. Sign up or log in to [Render](https://render.com/).
-3. Click **New +** and select **Web Service**.
-4. Connect your GitHub repository.
-5. Configure the Web Service settings:
-   - **Environment:** `Node`
-   - **Build Command:** `npm run setup && npm run build`
-   - **Start Command:** `npm start`
-6. Scroll down to **Environment Variables** and add:
-   - `NODE_ENV`: `production`
-7. Click **Create Web Service**.
-
-Render will automatically install dependencies, seed the SQLite database, build both the frontend and backend, and start the unified server. Your application will be live at your `*.onrender.com` URL and WebSocket connections will work out of the box!
 
 ## 📄 License
 

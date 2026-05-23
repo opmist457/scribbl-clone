@@ -84,6 +84,7 @@ type GameAction =
   | { type: 'CORRECT_GUESS'; payload: { playerId: string; playerName: string } }
   | { type: 'SET_ERROR'; payload: string | null }
   | { type: 'LEAVE_ROOM' }
+  | { type: 'SCOREBOARD_UPDATE'; payload: { scores: any[] } }
   | { type: 'RETURN_TO_LOBBY'; payload: { room: RoomState } };
 
 /* ---- Helper: extract players from RoomState ---- */
@@ -279,6 +280,27 @@ function gameReducer(state: GameContextState, action: GameAction): GameContextSt
         gameState: {
           ...state.gameState,
           phase: 'game_over',
+          scores: scoreMap,
+        },
+        players: state.players.map(p => ({
+          ...p,
+          score: scoreMap[p.id] ?? p.score,
+        })),
+      };
+    }
+
+    case 'SCOREBOARD_UPDATE': {
+      const { scores } = action.payload;
+      const scoreMap: Record<string, number> = {};
+      if (Array.isArray(scores)) {
+        scores.forEach((s: any) => { scoreMap[s.playerId] = s.score; });
+      } else {
+        Object.assign(scoreMap, scores);
+      }
+      return {
+        ...state,
+        gameState: {
+          ...state.gameState,
           scores: scoreMap,
         },
         players: state.players.map(p => ({
@@ -537,8 +559,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       });
     });
 
-    socket.on('scoreboard_update', (_data: any) => {
-      // Could update scores here but round_end handles it
+    socket.on('scoreboard_update', (data: any) => {
+      dispatch({ type: 'SCOREBOARD_UPDATE', payload: { scores: data.scores } });
     });
 
     return () => {
