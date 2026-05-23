@@ -160,6 +160,7 @@ export interface ClientToServerEvents {
   draw: (data: { roomId: string } & DrawEventData) => void;
   clear_canvas: (data: { roomId: string }) => void;
   draw_undo: (data: { roomId: string; count: number }) => void;
+  request_canvas_state: (data: { roomId: string }) => void;
 
   // Chat — during drawing phase all messages become guesses
   guess: (data: { roomId: string; text: string }) => void;
