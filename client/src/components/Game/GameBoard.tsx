@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
 import DrawingCanvas from '../Canvas/DrawingCanvas';
 import ChatBox from '../Chat/ChatBox';
@@ -16,7 +17,17 @@ const GameBoard: React.FC = () => {
     players,
     isDrawer,
     leaveRoom,
+    myPlayerId,
   } = useGame();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // If the user refreshes or hasn't joined properly, send them to homepage
+    if (!myPlayerId) {
+      navigate('/', { replace: true });
+    }
+  }, [myPlayerId, navigate]);
 
   const currentDrawerPlayer = players.find(p => p.id === gameState.currentDrawer);
 

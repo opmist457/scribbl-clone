@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
 import Avatar from '../UI/Avatar';
 import RoomSettingsComponent from './RoomSettings';
@@ -16,7 +17,15 @@ const Lobby: React.FC = () => {
     startGame,
   } = useGame();
 
+  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    // If the user refreshes or hasn't joined properly, send them to homepage
+    if (!myPlayerId) {
+      navigate('/', { replace: true });
+    }
+  }, [myPlayerId, navigate]);
 
   const handleCopyCode = async () => {
     if (roomId) {

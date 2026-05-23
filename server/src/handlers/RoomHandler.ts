@@ -41,6 +41,12 @@ export function registerRoomHandlers(
         return;
       }
 
+      // Cleanup any existing session for this socket to prevent duplicates
+      const existingInfo = getSocketRoom(socket.id);
+      if (existingInfo) {
+        handlePlayerLeave(io, socket, rooms, existingInfo.roomId);
+      }
+
       // Create host player
       const host = new Player(socket.id, playerName.trim(), avatarColor || '#4A90D9', true);
 
@@ -92,6 +98,12 @@ export function registerRoomHandlers(
         if (callback) callback(error);
         socket.emit('error_event', { message: 'Player name is required' });
         return;
+      }
+
+      // Cleanup any existing session for this socket to prevent duplicates
+      const existingInfo = getSocketRoom(socket.id);
+      if (existingInfo) {
+        handlePlayerLeave(io, socket, rooms, existingInfo.roomId);
       }
 
       const room = rooms.get(roomId?.toUpperCase());
