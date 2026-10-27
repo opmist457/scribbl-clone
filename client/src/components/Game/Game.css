@@ -116,7 +116,7 @@
     display: flex;
     flex-direction: column;
     height: 100dvh; /* Dynamic viewport height to account for mobile URL bars */
-    min-height: 100dvh;
+    min-height: 0;  /* Allow flexbox to shrink children when keyboard opens */
     padding: 6px;
     gap: 6px;
     overflow: hidden; /* Prevent page scrolling, components scroll internally */
@@ -124,6 +124,7 @@
 
   .game-top-bar {
     order: 1;
+    flex: 0 0 auto; /* Never shrink the top bar */
     flex-wrap: wrap;
     gap: 8px;
     padding: 8px;
