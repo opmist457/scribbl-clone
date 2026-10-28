@@ -171,6 +171,38 @@
   .scoreboard {
     display: none;
   }
+  /* ==============================
+   * KEYBOARD OPEN STATE
+   * When user taps chat input on mobile, collapse everything
+   * except the canvas and the chat input bar.
+   * ============================== */
+
+  /* Hide the top bar entirely to give max space to canvas */
+  .game-board.keyboard-open .game-top-bar {
+    display: none;
+  }
+
+  /* Canvas should take most of the screen but allow shrinking */
+  .game-board.keyboard-open .game-center {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* Canvas wrapper: remove the 300px min-height so it can shrink */
+  .game-board.keyboard-open .canvas-wrapper {
+    min-height: 0;
+  }
+
+  /* Chat box: collapse to just the input bar */
+  .game-board.keyboard-open .chat-box {
+    flex: 0 0 auto;
+  }
+
+  /* Hide chat header and messages, keep only input */
+  .game-board.keyboard-open .chat-header,
+  .game-board.keyboard-open .chat-messages {
+    display: none;
+  }
 }
 
 /* Word Selection Modal */

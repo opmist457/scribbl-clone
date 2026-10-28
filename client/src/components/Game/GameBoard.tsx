@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
+import { useKeyboardVisible } from '../../hooks/useKeyboardVisible';
 import DrawingCanvas from '../Canvas/DrawingCanvas';
 import ChatBox from '../Chat/ChatBox';
 import Scoreboard from '../Scoreboard/Scoreboard';
@@ -22,6 +23,7 @@ const GameBoard: React.FC = () => {
   } = useGame();
 
   const navigate = useNavigate();
+  const isKeyboardOpen = useKeyboardVisible();
 
   useEffect(() => {
     // If the user refreshes or hasn't joined properly, send them to homepage
@@ -33,7 +35,7 @@ const GameBoard: React.FC = () => {
   const currentDrawerPlayer = players.find(p => p.id === gameState.currentDrawer);
 
   return (
-    <div className="game-board">
+    <div className={`game-board ${isKeyboardOpen ? 'keyboard-open' : ''}`}>
       {/* Top Bar */}
       <div className="game-top-bar">
         <div className="game-round-info">

@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGame } from '../../context/GameContext';
-import { useKeyboardVisible } from '../../hooks/useKeyboardVisible';
 import './Chat.css';
 
 const ChatBox: React.FC = () => {
   const { messages, sendMessage, isDrawer, gameState } = useGame();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const isKeyboardOpen = useKeyboardVisible();
 
   const isDrawingPhase = gameState.phase === 'drawing';
   const canSend = !isDrawer || !isDrawingPhase;
@@ -26,45 +24,39 @@ const ChatBox: React.FC = () => {
   };
 
   return (
-    <div className={`chat-box ${isKeyboardOpen ? 'keyboard-open' : ''}`}>
-      {/* Hide header when keyboard is open on mobile to save space */}
-      {!isKeyboardOpen && (
-        <div className="chat-header">
-          💬 Chat & Guesses
-        </div>
-      )}
+    <div className="chat-box">
+      <div className="chat-header">
+        💬 Chat & Guesses
+      </div>
 
-      {/* Hide messages when keyboard is open so canvas stays visible */}
-      {!isKeyboardOpen && (
-        <div className="chat-messages">
-          {messages.length === 0 && (
-            <div className="chat-msg system">
-              Messages will appear here...
-            </div>
-          )}
+      <div className="chat-messages">
+        {messages.length === 0 && (
+          <div className="chat-msg system">
+            Messages will appear here...
+          </div>
+        )}
 
-          {messages.map((msg) => (
-            <div key={msg.id} className={`chat-msg ${msg.type}`}>
-              {msg.type === 'chat' && (
-                <>
-                  <span className="msg-sender">{msg.playerName}:</span>
-                  {msg.content}
-                </>
-              )}
-              {msg.type === 'correct_guess' && (
-                <>🎉 {msg.content}</>
-              )}
-              {msg.type === 'close_guess' && (
-                <>🤏 {msg.content}</>
-              )}
-              {(msg.type === 'system' || msg.type === 'join' || msg.type === 'leave') && (
-                <>{msg.content}</>
-              )}
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-      )}
+        {messages.map((msg) => (
+          <div key={msg.id} className={`chat-msg ${msg.type}`}>
+            {msg.type === 'chat' && (
+              <>
+                <span className="msg-sender">{msg.playerName}:</span>
+                {msg.content}
+              </>
+            )}
+            {msg.type === 'correct_guess' && (
+              <>🎉 {msg.content}</>
+            )}
+            {msg.type === 'close_guess' && (
+              <>🤏 {msg.content}</>
+            )}
+            {(msg.type === 'system' || msg.type === 'join' || msg.type === 'leave') && (
+              <>{msg.content}</>
+            )}
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
 
       {isDrawer && isDrawingPhase ? (
         <div className="chat-drawer-notice">

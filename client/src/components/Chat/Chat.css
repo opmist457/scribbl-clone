@@ -198,10 +198,4 @@
   .chat-send-btn {
     padding: 6px 12px;
   }
-
-  /* When keyboard is open, collapse the chat to just the input bar */
-  .chat-box.keyboard-open {
-    flex: 0 0 auto;   /* Stop taking remaining space */
-    min-height: auto;
-  }
 }
