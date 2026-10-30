@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
-import { useKeyboardVisible } from '../../hooks/useKeyboardVisible';
 import DrawingCanvas from '../Canvas/DrawingCanvas';
 import ChatBox from '../Chat/ChatBox';
 import Scoreboard from '../Scoreboard/Scoreboard';
@@ -22,8 +21,37 @@ const GameBoard: React.FC = () => {
     roomId,
   } = useGame();
 
+  const [isTyping, setIsTyping] = useState(false);
   const navigate = useNavigate();
-  const isKeyboardOpen = useKeyboardVisible();
+
+  // Track visual viewport dynamically on mobile so keyboard opens without shifting layout
+  useEffect(() => {
+    const handleViewport = () => {
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${vh}px`);
+      if (window.scrollY !== 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+
+    handleViewport();
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleViewport);
+      window.visualViewport.addEventListener('scroll', handleViewport);
+    } else {
+      window.addEventListener('resize', handleViewport);
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleViewport);
+        window.visualViewport.removeEventListener('scroll', handleViewport);
+      } else {
+        window.removeEventListener('resize', handleViewport);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // If the user refreshes or hasn't joined properly, send them to homepage
@@ -35,7 +63,7 @@ const GameBoard: React.FC = () => {
   const currentDrawerPlayer = players.find(p => p.id === gameState.currentDrawer);
 
   return (
-    <div className={`game-board ${isKeyboardOpen ? 'keyboard-open' : ''}`}>
+    <div className={`game-board ${isTyping ? 'is-typing' : ''}`}>
       {/* Top Bar */}
       <div className="game-top-bar">
         <div className="game-round-info">
@@ -92,7 +120,7 @@ const GameBoard: React.FC = () => {
       </div>
 
       {/* Chat (Right) */}
-      <ChatBox />
+      <ChatBox onFocusChange={setIsTyping} />
 
       {/* Word Selection Modal (for drawer) */}
       {gameState.phase === 'choosing' && isDrawer && gameState.wordChoices.length > 0 && (

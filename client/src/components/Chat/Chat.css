@@ -192,7 +192,7 @@
   
   .chat-input {
     padding: 6px 10px;
-    font-size: 0.95rem; /* Prevent iOS zoom on focus */
+    font-size: 16px; /* 16px strictly prevents iOS zoom on focus */
   }
   
   .chat-send-btn {

@@ -115,25 +115,32 @@
   .game-board {
     display: flex;
     flex-direction: column;
-    height: 100dvh; /* Dynamic viewport height to account for mobile URL bars */
-    min-height: 0;  /* Allow flexbox to shrink children when keyboard opens */
+    height: var(--app-height, 100dvh);
+    max-height: var(--app-height, 100dvh);
+    min-height: 0;
     padding: 6px;
     gap: 6px;
     overflow: hidden; /* Prevent page scrolling, components scroll internally */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
   }
 
   .game-top-bar {
     order: 1;
-    flex: 0 0 auto; /* Never shrink the top bar */
     flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px;
+    gap: 6px;
+    padding: 6px 8px;
     border-radius: 8px;
     justify-content: space-between;
+    flex-shrink: 0;
   }
 
   .game-round-info {
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
@@ -145,63 +152,128 @@
   }
 
   .room-code-badge, .round-badge {
-    padding: 4px 10px;
-    font-size: 0.85rem;
+    padding: 4px 8px;
+    font-size: 0.8rem;
   }
 
   .drawer-name {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     text-align: center;
     width: 100%;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .game-center {
     order: 2;
-    flex: 0 0 auto; /* Do not grow, do not shrink */
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
   }
 
   .chat-box {
     order: 3;
-    flex: 1; /* Take all remaining space */
-    min-height: 0; /* Important for flex-shrink */
+    flex: 1 1 0;
+    min-height: 0;
   }
 
   /* Hide scoreboard on small screens to save space */
   .scoreboard {
     display: none;
   }
-  /* ==============================
-   * KEYBOARD OPEN STATE
-   * When user taps chat input on mobile, collapse everything
-   * except the canvas and the chat input bar.
-   * ============================== */
 
-  /* Hide the top bar entirely to give max space to canvas */
-  .game-board.keyboard-open .game-top-bar {
-    display: none;
+  /* ====================================================
+   * KEYBOARD OPEN / TYPING A GUESS ON MOBILE
+   * Canvas remains 100% visible, centered and sharp
+   * ==================================================== */
+  .game-board.is-typing {
+    padding: 4px;
+    gap: 4px;
   }
 
-  /* Canvas should take most of the screen but allow shrinking */
-  .game-board.keyboard-open .game-center {
+  /* Condense top bar into a slim, single row showing just the word hint and timer */
+  .game-board.is-typing .game-top-bar {
+    padding: 3px 8px;
+    gap: 4px;
+    justify-content: center;
+    background: rgba(250, 245, 239, 0.08);
+    border-radius: 8px;
+  }
+
+  .game-board.is-typing .game-round-info,
+  .game-board.is-typing .round-badge,
+  .game-board.is-typing .room-code-badge,
+  .game-board.is-typing .drawer-name,
+  .game-board.is-typing .leave-game-btn {
+    display: none !important;
+  }
+
+  .game-board.is-typing .hint-and-timer {
+    width: auto;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .game-board.is-typing .timer-container {
+    width: 34px;
+    height: 34px;
+  }
+
+  .game-board.is-typing .timer-text {
+    font-size: 0.78rem;
+  }
+
+  .game-board.is-typing .hint-char {
+    height: 22px;
+    min-width: 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Canvas takes available space above keyboard */
+  .game-board.is-typing .game-center {
     flex: 1 1 auto;
     min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
 
-  /* Canvas wrapper: remove the 300px min-height so it can shrink */
-  .game-board.keyboard-open .canvas-wrapper {
-    min-height: 0;
-  }
-
-  /* Chat box: collapse to just the input bar */
-  .game-board.keyboard-open .chat-box {
+  /* Chat collapses to a docked input bar with compact message preview */
+  .game-board.is-typing .chat-box {
     flex: 0 0 auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  /* Hide chat header and messages, keep only input */
-  .game-board.keyboard-open .chat-header,
-  .game-board.keyboard-open .chat-messages {
+  .game-board.is-typing .chat-header {
     display: none;
+  }
+
+  .game-board.is-typing .chat-messages {
+    max-height: 32px;
+    padding: 2px 6px;
+    background: rgba(26, 17, 71, 0.5);
+    border-radius: 6px;
+    margin-bottom: 2px;
+  }
+
+  .game-board.is-typing .chat-msg {
+    padding: 2px 4px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .game-board.is-typing .chat-input-area {
+    padding: 4px;
+    background: rgba(13, 10, 26, 0.92);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 }
 

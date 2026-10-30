@@ -24,8 +24,14 @@ const DrawingCanvas: React.FC = () => {
 
   const isActive = gameState.phase === 'drawing';
 
+  const handleWrapperClick = () => {
+    if (!isDrawer && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
   return (
-    <div className="canvas-wrapper">
+    <div className="canvas-wrapper" onClick={handleWrapperClick}>
       <div className="canvas-container">
         <canvas
           ref={canvasRef as React.RefObject<HTMLCanvasElement>}
